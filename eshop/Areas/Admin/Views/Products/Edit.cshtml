@@ -1,0 +1,13 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Carousel Edit";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Edit product item.</p>
+
+a
+@{ViewBag.Action = "Edit"; }
+
+<partial name="EditForm" model="Model">
