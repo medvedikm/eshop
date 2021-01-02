@@ -18,7 +18,7 @@ namespace eshop.Models.Database
         public DbSet<OrderItem> OrderItem { get; set; }
 
 
-        /*rotected override void OnModelCreating(ModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 

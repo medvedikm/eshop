@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 namespace eshop.Models
 {
     [Table("Product")]
-    public class Product : Entity
+    public class Product
     {
+        
+        [Key]
+        [Required]
+        public int ID { get; set; }
         [Required]
         public string ProductName { get; set; }
         [NotMapped]

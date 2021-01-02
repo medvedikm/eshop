@@ -26,13 +26,6 @@ namespace eshop.Controllers
             return View(carousel);
         }
 
-       /* public async Task<IActionResult> Index()
-        {
-            CarouselViewModel product = new CarouselViewModel();
-            product.Products = await EshopDBContext.Products.ToListAsync();
-            return View(product);
-        }*/
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
