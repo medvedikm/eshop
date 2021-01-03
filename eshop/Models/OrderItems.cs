@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace eshop.Models
 {
-    [Table(nameof(OrderItem))]
-    public class OrderItem : Entity
+    [Table(nameof(OrderItems))]
+    public class OrderItems : Entity
     {
         [ForeignKey(nameof(Order))]
         public int OrderID { get; set; }

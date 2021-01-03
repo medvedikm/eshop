@@ -14,18 +14,18 @@
 @{
     if (Model != null && Model.Products != null && Model.Products.Count > 0)
     {
-        <table style="width:100%">
-            <tr>
-                <th class="col-sm-1">@Html.DisplayNameFor(model => model.Products[0].ID)</th>
-                <th class="col-sm-2">@Html.DisplayNameFor(model => model.Products[0].ProductName)</th>
-                <th class="col-sm-2">@Html.DisplayNameFor(model => model.Products[0].ImageAlt)</th>
-                <th class="col-sm-2">@Html.DisplayNameFor(model => model.Products[0].ImageSrc)</th>
-                <th class="col-sm-1">Edit</th>
-                <th class="col-sm-1">Delete</th>
-            </tr>
-            @foreach (var productItem in Model.Products)
+    <table style="width:100%">
+        <tr>
+            <th class="col-sm-1">@Html.DisplayNameFor(model => model.Products[0].ID)</th>
+            <th class="col-sm-2">@Html.DisplayNameFor(model => model.Products[0].ProductName)</th>
+            <th class="col-sm-2">@Html.DisplayNameFor(model => model.Products[0].ImageAlt)</th>
+            <th class="col-sm-2">@Html.DisplayNameFor(model => model.Products[0].ImageSrc)</th>
+            <th class="col-sm-1">Edit</th>
+            <th class="col-sm-1">Delete</th>
+        </tr>
+        @{
+            foreach (var productItem in Model.Products)
             {
-
                 <tr>
                     <td class="col-sm-1">@productItem.ID</td>
                     <td class="col-sm-2">@productItem.ProductName</td>
@@ -35,8 +35,10 @@
                     <td class="col-sm-1"><a asp-action="Delete" asp-route-ID="@productItem.ID" onclick="return ConfirmDelete();">Delete</a></td>
 
                 </tr>
+
             }
-        </table>
+        }
+    </table>
     }
     else
     {

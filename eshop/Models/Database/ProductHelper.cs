@@ -9,7 +9,7 @@ namespace eshop.Models.DatabaseFake
     {
         public static IList<Product> GenerateProducts()
         {
-            IList<Product> products = new List<Product>
+            IList<Product> products = new List<Product>()
             {
                 new Product()
                 {
@@ -30,7 +30,7 @@ namespace eshop.Models.DatabaseFake
                     ProductName = "Nissan GTR",
                     ImageSrc = "/images/NissanGTR.jpg",
                     ImageAlt = "Nissan-GTR"
-                },
+                }
 
             };
             return products;

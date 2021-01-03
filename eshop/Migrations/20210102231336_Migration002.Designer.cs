@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eshop.Models.Database;
 
 namespace eshop.Migrations
 {
     [DbContext(typeof(EshopDBContext))]
-    partial class EshopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210102231336_Migration002")]
+    partial class Migration002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace eshop.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("eshop.Models.OrderItems", b =>
+            modelBuilder.Entity("eshop.Models.OrderItem", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -86,7 +88,7 @@ namespace eshop.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("eshop.Models.Product", b =>
@@ -111,10 +113,10 @@ namespace eshop.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("eshop.Models.OrderItems", b =>
+            modelBuilder.Entity("eshop.Models.OrderItem", b =>
                 {
                     b.HasOne("eshop.Models.Order", "Order")
-                        .WithMany("OrderItems")
+                        .WithMany("OrderItem")
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade);
 

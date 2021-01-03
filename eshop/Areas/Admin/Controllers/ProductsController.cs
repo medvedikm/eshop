@@ -54,7 +54,8 @@ namespace eshop.Areas.Admin.Controllers
         public IActionResult Edit(int id)
         {
             Product productItem = EshopDBContext.Products.Where(p => p.ID == id).FirstOrDefault();
-            if (productItem != null)
+
+            if(productItem != null)
             {
                 return View(productItem);
             }

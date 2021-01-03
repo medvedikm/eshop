@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using eshop.Models.Database.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,16 @@ namespace eshop.Models.Database
         public DbSet<Carousel> Carousels { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Order { get; set; }
-        public DbSet<OrderItem> OrderItem { get; set; }
+        public DbSet<OrderItems> OrderItem { get; set; }
 
-
-        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
-        }*/
+            modelBuilder.ApplyConfiguration(new CarouselConfiguration());
+            //modelBuilder.ApplyConfiguration(new OrderConfiguration());
+        }
 
     }
 }
