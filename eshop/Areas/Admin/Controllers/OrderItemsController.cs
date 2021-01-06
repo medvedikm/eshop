@@ -25,8 +25,8 @@ namespace eshop.Areas.Admin.Controllers
         {
             var eshopDBContext = _context.OrderItem.Include(o => o.Order).Include(o => o.Product);
             return View(await eshopDBContext.ToListAsync());
-/*
-            var orderItem = _context.OrderItem.Where(oi => oi.ID == 2).FirstOrDefault();
+
+           /* var orderItem = _context.OrderItem.Where(oi => oi.ID == 2).FirstOrDefault();
 
             _context.Entry(orderItem)
                 .Reference(oi => oi.Order)

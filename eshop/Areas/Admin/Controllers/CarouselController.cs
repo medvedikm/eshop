@@ -39,16 +39,23 @@ namespace eshop.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Carousel carousel)
         {
-            carousel.ImageSrc = String.Empty;
+            if (ModelState.IsValid) 
+            {
+                carousel.ImageSrc = String.Empty;
 
-            FileUpload fup = new FileUpload(Env);
-            await fup.FileUploadAsync(carousel);
+                FileUpload fup = new FileUpload(Env);
+                await fup.FileUploadAsync(carousel);
 
-            EshopDBContext.Carousels.Add(carousel);
+                EshopDBContext.Carousels.Add(carousel);
 
-            await EshopDBContext.SaveChangesAsync();
+                await EshopDBContext.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Select));
+                return RedirectToAction(nameof(Select));
+            }
+            else 
+            {
+                return View(carousel);
+            }
         }
 
         public IActionResult Edit(int id)
@@ -70,7 +77,8 @@ namespace eshop.Areas.Admin.Controllers
         {
             Carousel carouselItem = EshopDBContext.Carousels.Where(carI => carI.ID == carousel.ID).FirstOrDefault();
 
-            if (carouselItem != null)
+
+            if (carouselItem != null && ModelState.IsValid)
             {
                 carouselItem.DataTarget = carousel.DataTarget;
                 carouselItem.ImageAlt = carousel.ImageAlt;

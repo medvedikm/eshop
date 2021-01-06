@@ -11,3 +11,8 @@
 @{ViewBag.Action = "Create"; }
 
 @await Html.PartialAsync("EditForm", Model)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/Validation/FileContentTypeValidation.js"></script>
+}

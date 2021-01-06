@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eshop.Models.Validation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,7 @@ namespace eshop.Models
         [Required]
         public string DataTarget { get; set; }
         [NotMapped]
+        [FileContentType("image")]
         public IFormFile Image { get; set; }
         [Required]
         [StringLength(255)]
