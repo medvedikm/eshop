@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eshop.Models.Validation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,15 +10,13 @@ using System.Threading.Tasks;
 namespace eshop.Models
 {
     [Table("Product")]
-    public class Product
+    public class Product : Entity
     {
         
-        [Key]
-        [Required]
-        public int ID { get; set; }
         [Required]
         public string ProductName { get; set; }
         [NotMapped]
+        [FileContentType("image")]
         public IFormFile Image { get; set; }
         [Required]
         [StringLength(255)]

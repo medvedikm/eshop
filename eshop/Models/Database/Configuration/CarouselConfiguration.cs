@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace eshop.Models.Database.Configuration
 {
-    public class CarouselConfiguration : IEntityTypeConfiguration<OrderItems>
+    public class CarouselConfiguration : EntityConfiguration, IEntityTypeConfiguration<Carousel>
     {
-      public void Configure(EntityTypeBuilder<OrderItems> builder)
+        public void Configure(EntityTypeBuilder<Carousel> builder)
         {
-            builder.Property(nameof(OrderItems.DateTimeCreated))
-                .ValueGeneratedOnAddOrUpdate()
-                .HasDefaultValueSql("GETDATE()");
+            base.Configure(builder);
         }
     }
 }

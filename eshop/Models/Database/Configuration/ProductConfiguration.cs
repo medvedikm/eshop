@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace eshop.Models.Database.Configuration
 {
-    public class OrderItemConfiguration : EntityConfiguration, IEntityTypeConfiguration<OrderItems>
+    public class ProductConfiguration : EntityConfiguration, IEntityTypeConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<OrderItems> builder) 
-        { 
+        public void Configure(EntityTypeBuilder<Product> builder)
+        {
             base.Configure(builder);
         }
     }

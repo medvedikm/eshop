@@ -1,4 +1,7 @@
 ﻿using eshop.Models.Database.Configuration;
+using eshop.Models.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eshop.Models.Database
 {
-    public class EshopDBContext : DbContext
+    public class EshopDBContext : IdentityDbContext<User, Role, int>
     {
         public EshopDBContext(DbContextOptions options) : base(options)
         {
@@ -22,9 +25,16 @@ namespace eshop.Models.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
             modelBuilder.ApplyConfiguration(new CarouselConfiguration());
-            //modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
+
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                entity.Relational().TableName = entity.Relational().TableName.Replace("AspNet", String.Empty);
+            }
+
         }
 
     }

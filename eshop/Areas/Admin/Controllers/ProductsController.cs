@@ -41,8 +41,8 @@ namespace eshop.Areas.Admin.Controllers
         {
             product.ImageSrc = String.Empty;
 
-            FileUpload fup = new FileUpload(Env);
-            await fup.FileUploadAsync(product);
+            FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Products");
+            product.ImageSrc = await fup.FileUploadAsync(product.Image);
 
             EshopDBContext.Products.Add(product);
 
@@ -75,8 +75,8 @@ namespace eshop.Areas.Admin.Controllers
                 productItem.ProductName = product.ProductName;
                 productItem.ImageAlt = product.ImageAlt;
 
-                FileUpload fup = new FileUpload(Env);
-                if (await fup.FileUploadAsync(product))
+                FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Carousels");
+                if (String.IsNullOrWhiteSpace(product.ImageSrc = await fup.FileUploadAsync(product.Image)) == false)
                 {
                     productItem.ImageSrc = product.ImageSrc;
                 }
