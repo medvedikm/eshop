@@ -41,11 +41,11 @@ namespace eshop
             services.AddIdentity<User, Role>()
                     .AddEntityFrameworkStores<EshopDBContext>()
                     .AddDefaultTokenProviders();
-            
+            /*
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 3;
+                options.Password.RequiredLength = 10;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true ;
                 options.Password.RequireLowercase = true;
@@ -57,8 +57,8 @@ namespace eshop
 
                 options.User.RequireUniqueEmail = true;
             });
+            */
             
-            /*
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -74,7 +74,7 @@ namespace eshop
 
                 options.User.RequireUniqueEmail = true;
             });
-            */
+            
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -103,6 +103,9 @@ namespace eshop
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/Home/ErrorCodeStatus",
+                                                "?statusCode={0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -110,7 +110,11 @@ namespace eshop.Models.Database
 
                         foreach (var role in roles)
                         {
-                            await userManager.AddToRoleAsync(manager, role);
+                            if (role != Roles.Admin.ToString())
+                            {
+                                await userManager.AddToRoleAsync(manager, role);
+                            }
+                            
                         }
                     }
                     else if (iResult.Errors != null && iResult.Errors.Count() > 0)
