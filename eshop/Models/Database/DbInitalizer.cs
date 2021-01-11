@@ -54,13 +54,13 @@ namespace eshop.Models.Database
             using (var services = serviceProvider.CreateScope())
             {
                 UserManager<User> userManager = services.ServiceProvider.GetRequiredService<UserManager<User>>();
-                User admin = new User() 
-                { 
-                    UserName = "admin", 
-                    Email = "admin_medvedik@utb.cz", 
-                    Name = "Michal", 
-                    LastName = "Medvedík", 
-                    EmailConfirmed = true 
+                User admin = new User()
+                {
+                    UserName = "admin",
+                    Email = "admin_medvedik@utb.cz",
+                    Name = "Michal",
+                    LastName = "Medvedík",
+                    EmailConfirmed = true
                 };
 
                 var password = "abcd";
@@ -85,11 +85,42 @@ namespace eshop.Models.Database
                         foreach (var error in iResult.Errors)
                         {
                             Debug.WriteLine("Error during role Creation: " + error.Code + " -> " + error.Description);
-                        }                   
+                        }
                     }
-                    
                 }
 
+                User manager = new User()
+                {
+                    UserName = "manager",
+                    Email = "manager_medvedik@utb.cz",
+                    Name = "Michal",
+                    LastName = "Medvedík",
+                    EmailConfirmed = true
+                };
+
+                User managerInDatabase = await userManager.FindByNameAsync(manager.UserName);
+
+                if (managerInDatabase == null)
+                {
+                    IdentityResult iResult = await userManager.CreateAsync(manager, password);
+
+                    if (iResult.Succeeded)
+                    {
+                        string[] roles = Enum.GetNames(typeof(Roles));
+
+                        foreach (var role in roles)
+                        {
+                            await userManager.AddToRoleAsync(manager, role);
+                        }
+                    }
+                    else if (iResult.Errors != null && iResult.Errors.Count() > 0)
+                    {
+                        foreach (var error in iResult.Errors)
+                        {
+                            Debug.WriteLine("Error during role Creation: " + error.Code + " -> " + error.Description);
+                        }
+                    }
+                }
             }
         }
     }

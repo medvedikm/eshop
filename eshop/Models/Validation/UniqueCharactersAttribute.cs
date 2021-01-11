@@ -8,18 +8,20 @@ using System.Threading.Tasks;
 
 namespace eshop.Models.Validation
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false)]
-    public class FileContentTypeAttribute : ValidationAttribute, IClientModelValidator
+    public class UniqueCharactersAttribute : ValidationAttribute, IClientModelValidator
     {
         
-        private readonly string contentType;
-        public FileContentTypeAttribute(string contentType)
+        private readonly int contentType;
+        public UniqueCharactersAttribute(int contentType)
         {
             this.contentType = contentType;
         }
-
+        /*
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            // https://stackoverflow.com/questions/19480916/count-number-of-occurrences-for-each-char-in-a-string
+            //var count = myString.Distinct().Count();
+
             if (value == null)
             {
                 return ValidationResult.Success;
@@ -43,12 +45,13 @@ namespace eshop.Models.Validation
             return $"{ memberName } must be the type of {contentType}!";
         }
 
-
+        */
         public void AddValidation(ClientModelValidationContext context)
         {
-            ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val", "true");
-            ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-filecontent", GetErrorMessage("File"));
-            ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-filecontent-type", contentType);
+            //ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val", "true");
+            //ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-filecontent", GetErrorMessage("File"));
+            //ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-filecontent-type", contentType);
         }
+        
     }
 }

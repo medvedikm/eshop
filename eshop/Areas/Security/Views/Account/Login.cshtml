@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Login";
 }
-<h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
 
@@ -15,6 +14,7 @@
     <environment exclude="Development">
         <link rel="stylesheet" href="~/css/Styles.css" />
         <link rel="stylesheet" href="~/css/shop_login_form.css">
+
     </environment>
 }
 
@@ -56,7 +56,7 @@
                 <form class="omb_loginForm" action="" autocomplete="off" method="POST">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" class="form-control" name="username" placeholder="email address">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>
                     <span class="help-block"></span>
 
