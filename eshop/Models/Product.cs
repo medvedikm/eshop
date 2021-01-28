@@ -14,6 +14,7 @@ namespace eshop.Models
     {
         
         [Required]
+        [StringLength(50)]
         public string ProductName { get; set; }
         [NotMapped]
         [FileContentType("image")]
@@ -24,5 +25,10 @@ namespace eshop.Models
         [Required]
         [StringLength(25)]
         public string ImageAlt { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string Description { get; set; }
+        [Required]
+        public double Price { get; set; }
     }
 }

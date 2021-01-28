@@ -11,46 +11,38 @@ namespace eshop.Models.Validation
     public class UniqueCharactersAttribute : ValidationAttribute, IClientModelValidator
     {
         
-        private readonly int contentType;
-        public UniqueCharactersAttribute(int contentType)
+        private readonly int uniqueChars;
+        public UniqueCharactersAttribute(int uniqueChars)
         {
-            this.contentType = contentType;
+            this.uniqueChars = uniqueChars;
         }
-        /*
+        
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            // https://stackoverflow.com/questions/19480916/count-number-of-occurrences-for-each-char-in-a-string
-            //var count = myString.Distinct().Count();
+            var count = value.ToString().Distinct().Count();
 
-            if (value == null)
+            if (count >= 6)
             {
                 return ValidationResult.Success;
             }
-            else if (value is IFormFile iff)
+            else 
             {
-                if (iff.ContentType.ToLower().Contains(contentType.ToLower()))
-                {
-                    return ValidationResult.Success;
-                }
-                else
-                {
-                    return new ValidationResult(GetErrorMessage("File"), new List<string> { validationContext.MemberName });
-                }
+                return new ValidationResult($"Password must contain at least {uniqueChars} unique characters!", new List<String> { validationContext.MemberName });
             }
             throw new NotImplementedException($"The attribute {nameof(FileContentTypeAttribute)} is not implemented for object  {value.GetType()}. {nameof(IFormFile)} only is implemented.");
         }
 
-        protected string GetErrorMessage(string memberName)
+        protected string GetErrorMessage()
         {
-            return $"{ memberName } must be the type of {contentType}!";
+            return $"Password must contain at least {uniqueChars} unique characters!";
         }
 
-        */
+        
         public void AddValidation(ClientModelValidationContext context)
         {
-            //ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val", "true");
-            //ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-filecontent", GetErrorMessage("File"));
-            //ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-filecontent-type", contentType);
+            ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val", "true");
+            ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-uniqchars", GetErrorMessage());
+            ClientSideAttributeHelper.MergeAttribute(context.Attributes, "data-val-uniqchars-count", uniqueChars.ToString());
         }
         
     }

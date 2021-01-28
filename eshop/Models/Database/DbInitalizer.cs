@@ -25,7 +25,7 @@ namespace eshop.Models.Database
                 dbContext.SaveChanges();
             }
 
-            if (dbContext.Carousels.Count() == 0)
+            if (dbContext.Products.Count() == 0)
             {
                 IList<Product> products = ProductHelper.GenerateProducts();
                 foreach (var item in products)

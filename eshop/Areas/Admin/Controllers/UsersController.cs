@@ -5,32 +5,30 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using eshop.Models;
 using eshop.Models.Database;
-using Microsoft.AspNetCore.Authorization;
 using eshop.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eshop.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = nameof(Roles.Admin) + ", "+ nameof(Roles.Manager))]
-    public class OrdersController : Controller
+    [Authorize(Roles = nameof(Roles.Admin))]
+    public class UsersController : Controller
     {
         private readonly EshopDBContext _context;
 
-        public OrdersController(EshopDBContext context)
+        public UsersController(EshopDBContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Orders
+        // GET: Admin/Users
         public async Task<IActionResult> Index()
         {
-            var eshopDBContext = _context.Order.Include(o => o.User);
-            return View(await _context.Order.ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
-        // GET: Admin/Orders/Details/5
+        // GET: Admin/Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,42 +36,39 @@ namespace eshop.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order
-                .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (order == null)
+            var user = await _context.User
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(user);
         }
 
-        // GET: Admin/Orders/Create
+        // GET: Admin/Users/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Admin/Orders/Create
+        // POST: Admin/Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderNumber,TotalPrice,UserId,ID,DateTimeCreated")] Order order)
+        public async Task<IActionResult> Create([Bind("Name,LastName,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(order);
+                _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
-            return View(order);
+            return View(user);
         }
 
-        // GET: Admin/Orders/Edit/5
+        // GET: Admin/Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,23 +76,22 @@ namespace eshop.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order.FindAsync(id);
-            if (order == null)
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
-            return View(order);
+            return View(user);
         }
 
-        // POST: Admin/Orders/Edit/5
+        // POST: Admin/Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderNumber,TotalPrice,UserId,ID,DateTimeCreated")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,LastName,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
         {
-            if (id != order.ID)
+            if (id != user.Id)
             {
                 return NotFound();
             }
@@ -106,12 +100,12 @@ namespace eshop.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(order);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.ID))
+                    if (!UserExists(user.Id))
                     {
                         return NotFound();
                     }
@@ -122,11 +116,10 @@ namespace eshop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
-            return View(order);
+            return View(user);
         }
 
-        // GET: Admin/Orders/Delete/5
+        // GET: Admin/Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,31 +127,30 @@ namespace eshop.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order
-                .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (order == null)
+            var user = await _context.User
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(user);
         }
 
-        // POST: Admin/Orders/Delete/5
+        // POST: Admin/Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var order = await _context.Order.FindAsync(id);
-            _context.Order.Remove(order);
+            var user = await _context.User.FindAsync(id);
+            _context.User.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrderExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.Order.Any(e => e.ID == id);
+            return _context.User.Any(e => e.Id == id);
         }
     }
 }

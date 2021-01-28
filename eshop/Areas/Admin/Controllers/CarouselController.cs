@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace eshop.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = nameof(Roles.Admin) + ", " + nameof(Roles.Admin))]
+    [Authorize(Roles = nameof(Roles.Admin) + ", " + nameof(Roles.Manager))]
     public class CarouselController : Controller
     {
         IHostingEnvironment Env;
@@ -78,28 +78,36 @@ namespace eshop.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Carousel carousel)
         {
-            Carousel carouselItem = EshopDBContext.Carousels.Where(carI => carI.ID == carousel.ID).FirstOrDefault();
 
-
-            if (carouselItem != null && ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                carouselItem.DataTarget = carousel.DataTarget;
-                carouselItem.ImageAlt = carousel.ImageAlt;
-                carouselItem.CarouselContent = carousel.CarouselContent;
+                Carousel carouselItem = EshopDBContext.Carousels.Where(carI => carI.ID == carousel.ID).FirstOrDefault();
 
-                FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Carousels");
-                if (String.IsNullOrWhiteSpace(carousel.ImageSrc = await fup.FileUploadAsync(carousel.Image)) == false)
+
+                if (carouselItem != null && ModelState.IsValid)
                 {
-                    carouselItem.ImageSrc = carousel.ImageSrc;
+                    carouselItem.DataTarget = carousel.DataTarget;
+                    carouselItem.ImageAlt = carousel.ImageAlt;
+                    carouselItem.CarouselContent = carousel.CarouselContent;
+
+                    FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Carousels");
+                    if (String.IsNullOrWhiteSpace(carousel.ImageSrc = await fup.FileUploadAsync(carousel.Image)) == false)
+                    {
+                        carouselItem.ImageSrc = carousel.ImageSrc;
+                    }
+
+                    await EshopDBContext.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Select));
                 }
-
-                await EshopDBContext.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Select));
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
-                return NotFound();
+                return View(carousel);
             }
         }
 

@@ -21,6 +21,8 @@ namespace eshop.Models.Database
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderItems> OrderItem { get; set; }
 
+        public DbSet<eshop.Models.Identity.User> User { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

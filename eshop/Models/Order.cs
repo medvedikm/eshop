@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eshop.Models.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,11 +10,17 @@ namespace eshop.Models
 {
     [Table(nameof(Order))]
     public class Order : Entity
-    { 
+    {
 
         [StringLength(25)]
         [Required]
         public string OrderNumber { get; set; }
+        [Required]
+        public double TotalPrice { get; set; }
+        [ForeignKey(nameof(Identity.User))]
+        public int UserId { get; set; }
+
+        public User User { get; set; }
         public IList<OrderItems> OrderItems { get; set; }
 
     }

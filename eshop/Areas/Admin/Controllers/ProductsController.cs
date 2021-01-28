@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace eshop.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = nameof(Roles.Admin) + ", " + nameof(Roles.Admin))]
+    [Authorize(Roles = nameof(Roles.Admin) + ", " + nameof(Roles.Manager))]
     public class ProductsController : Controller
     {
         IHostingEnvironment Env;
@@ -42,16 +42,23 @@ namespace eshop.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
-            product.ImageSrc = String.Empty;
+            if (ModelState.IsValid)
+            {
+                product.ImageSrc = String.Empty;
 
-            FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Products");
-            product.ImageSrc = await fup.FileUploadAsync(product.Image);
+                FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Products");
+                product.ImageSrc = await fup.FileUploadAsync(product.Image);
 
-            EshopDBContext.Products.Add(product);
+                EshopDBContext.Products.Add(product);
 
-            await EshopDBContext.SaveChangesAsync();
+                await EshopDBContext.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Select));
+                return RedirectToAction(nameof(Select));
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         public IActionResult Edit(int id)
@@ -71,26 +78,35 @@ namespace eshop.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Product product)
         {
-            Product productItem = EshopDBContext.Products.Where(p => p.ID == product.ID).FirstOrDefault();
-
-            if (productItem != null)
+            if (ModelState.IsValid)
             {
-                productItem.ProductName = product.ProductName;
-                productItem.ImageAlt = product.ImageAlt;
+                Product productItem = EshopDBContext.Products.Where(p => p.ID == product.ID).FirstOrDefault();
 
-                FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Carousels");
-                if (String.IsNullOrWhiteSpace(product.ImageSrc = await fup.FileUploadAsync(product.Image)) == false)
+                if (productItem != null)
                 {
-                    productItem.ImageSrc = product.ImageSrc;
+                    productItem.ProductName = product.ProductName;
+                    productItem.ImageAlt = product.ImageAlt;
+                    productItem.Description = product.Description;
+                    productItem.Price = product.Price;
+
+                    FileUpload fup = new FileUpload(Env.WebRootPath, "image", "Products");
+                    if (String.IsNullOrWhiteSpace(product.ImageSrc = await fup.FileUploadAsync(product.Image)) == false)
+                    {
+                        productItem.ImageSrc = product.ImageSrc;
+                    }
+
+                    await EshopDBContext.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Select));
                 }
-
-                await EshopDBContext.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Select));
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
-                return NotFound();
+                return View(product);
             }
         }
 
