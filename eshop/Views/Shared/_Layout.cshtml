@@ -41,12 +41,9 @@
 
                             <li><a asp-area="Admin" asp-controller="Carousel" asp-action="Select">Carousel</a></li>
                             <li><a asp-area="Admin" asp-controller="Products" asp-action="Select">Products</a></li>
-                            <li><a asp-area="Admin" asp-controller="Orders" asp-action="Index">Order</a></li>
+                            
                         }
-                        @if (User.Identity.IsAuthenticated == true && User.IsInRole(Roles.Admin.ToString()))
-                        {
-                            <li><a asp-area="Admin" asp-controller="OrderItems" asp-action="Index">OrderItems</a></li>
-                        }
+                       
                     }
                 
 

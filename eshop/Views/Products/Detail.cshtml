@@ -8,13 +8,12 @@
     <link href="~/css/shop-template.css" rel="stylesheet">
 }
 
-<h2>@ViewData["Title"]</h2>
-
+<h1>@ViewData["Title"]</h1>
 <!-- Page Content -->
 <div class="container">
 
-
     <div class="row">
+        <!-- /.col-lg-3 -->
 
         <div class="col-lg-9">
 
@@ -22,7 +21,7 @@
                 <img class="card-img-top img-fluid" src="@Model.ImageSrc" alt="@Model.ImageAlt">
                 <div class="card-body">
                     <h3 class="card-title">@Model.ProductName</h3>
-                    <h4>@Model.Price</h4>
+                    <h4>@Model.Price CZ</h4>
                     <p class="card-text">@Model.Description</p>
                 </div>
             </div>
@@ -36,6 +35,7 @@
     </div>
 
 </div>
+<!-- /.container -->
 <!-- /.container -->
 @section Scripts {
     <environment include="Development">

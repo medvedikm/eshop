@@ -25,6 +25,9 @@ namespace eshop.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ProductViewModel product = new ProductViewModel();
+            product.Products = await EshopDBContext.Products.ToListAsync();
+            ViewData["ProductViewModel"] = product;
             CarouselViewModel carousel = new CarouselViewModel();
             carousel.Carousels = await EshopDBContext.Carousels.ToListAsync();
             return View(carousel);
