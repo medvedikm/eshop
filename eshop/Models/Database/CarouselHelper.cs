@@ -13,39 +13,24 @@ namespace eshop.Models.DatabaseFake
             {
                 new Carousel() {
                     DataTarget="#myCarousel",
-                    ImageSrc="/images/banner1.svg",
-                    ImageAlt="ASP.NET",
-                    CarouselContent="Learn how to build ASP.NET apps that can run anywhere." +
-                    "<a class=\"btn btn-default\" href=\"https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409\">" +
-                    "Learn More</a>"
+                    ImageSrc="/images/Products/car1.jpg",
+                    ImageAlt="First car",
+                    CarouselContent="Our awesome products will make you happy forever!"
                 },
 
                 new Carousel() {
                     DataTarget="#myCarousel",
-                    ImageSrc="/images/banner2.svg",
-                    ImageAlt="Visual Studio",
-                    CarouselContent="There are powerful new features in Visual Studio for building modern web apps." +
-                    "<a class=\"btn btn-default\" href=\"https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409\">" +
-                    "Learn More</a>"
+                    ImageSrc="/images/Products/car2.jfif",
+                    ImageAlt="Second car",
+                    CarouselContent="We have the best choice around the world!"
                 },
 
                 new Carousel() {
                     DataTarget="#myCarousel",
-                    ImageSrc="/images/banner3.svg",
-                    ImageAlt="Microsoft Azure",
-                    CarouselContent="Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps." +
-                    "<a class=\"btn btn-default\" href=\"https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409\">" +
-                    "Learn More</a>"
+                    ImageSrc="/images/car4.png",
+                    ImageAlt="Third car",
+                    CarouselContent="Our technician team will make everything to fullfil your wishes!"
                 },
-
-                new Carousel() {
-                    DataTarget="#myCarousel",
-                    ImageSrc="/images/InformationTechnology.jpg",
-                    ImageAlt="Information Technology",
-                    CarouselContent="Information Technology." +
-                    "<a class=\"btn btn-default\" href=\"https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409\">" +
-                    "Learn More</a>"
-                }
 
             };
 
