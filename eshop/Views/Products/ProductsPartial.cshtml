@@ -18,10 +18,12 @@
 
 
                 <h1 class="my-4 text-center">Products</h1>
-                <div class="list-group col-md-offset-4 col-md-4 text-center">
-                    <a href="#" class="list-group-item col-md-4">Category 1</a>
-                    <a href="#" class="list-group-item col-md-4">Category 2</a>
-                    <a href="#" class="list-group-item col-md-4">Category 3</a>
+                <div class="list-group flex-sm-row justify-content-around">
+
+                    <a href="#" class="list-group-item ">Category 1</a>
+                    <a href="#" class="list-group-item">Category 2</a>
+                    <a href="#" class="list-group-item">Category 3</a>
+
                 </div>
 
             </div>
@@ -34,24 +36,24 @@
                 {
                     foreach (var productItem in Model.Products)
                     {
-    <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100">
-            <a asp-area="" asp-controller="Products" asp-action="Detail" asp-route-id="@productItem.ID"><img class="card-img-top" src="@productItem.ImageSrc" alt="@productItem.ImageAlt"></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                    <a asp-area="" asp-controller="Products" asp-action="Detail" asp-route-id="@productItem.ID">@productItem.ProductName</a>
-                </h4>
-                <h5>@productItem.Price Kč</h5>
-                <p class="card-text">@productItem.Description</p>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-            <input type="button" class="btn-success" value="Buy" style="font-size:1.4em;text-align:center"
-                   onclick="Buy(@productItem.ID, '@Url.Action("AddOrderItemsToSession", "CustomerOrderNotCart", new { Area = "Customer" })', '#total_price', '@System.Globalization.CultureInfo.CurrentCulture.Name')" />
-        </div>
-    </div> }
-} }
+                        <div class="col-6 col-md-4" >
+                                        <div class="card h-100">
+                                            <a asp-area="" asp-controller="Products" asp-action="Detail" asp-route-id="@productItem.ID"><img class="img-thumbnail" src="@productItem.ImageSrc" alt="@productItem.ImageAlt"></a>
+                                            <div class="card-body">
+                                                <h4 class="card-title">
+                                                    <a asp-area="" asp-controller="Products" asp-action="Detail" asp-route-id="@productItem.ID">@productItem.ProductName</a>
+                                                </h4>
+                                                <h5>@productItem.Price Kč</h5>
+                                                <p class="card-text">@productItem.Description</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                            </div>
+                                            <input type="button" class="btn-success" value="Buy" style="font-size:1.4em;text-align:center"
+                                                   onclick="Buy(@productItem.ID, '@Url.Action("AddOrderItemsToSession", "CustomerOrderNotCart", new { Area = "Customer" })', '#total_price', '@System.Globalization.CultureInfo.CurrentCulture.Name')" />
+                                        </div>
+                        </div> }
+                } }
 
 
 
@@ -62,4 +64,4 @@
     <!-- /.col-lg-9 -->
 
 </div>
-    <!-- /.row -->
+<!-- /.row -->

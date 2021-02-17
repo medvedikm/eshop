@@ -30,7 +30,7 @@ namespace eshop.Areas.Admin.Controllers
         public async Task<IActionResult> Select()
         {
             ProductViewModel product = new ProductViewModel();
-            product.Products = await EshopDBContext.Products.ToListAsync(); ;
+            product.Products = await EshopDBContext.Products.ToListAsync();
             return View(product);
         }
 

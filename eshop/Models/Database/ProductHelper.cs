@@ -14,7 +14,7 @@ namespace eshop.Models.DatabaseFake
                 new Product()
                 {
                     ProductName = "Bugatti Veyron",
-                    ImageSrc = "/images/BugattiVeyron.jfif",
+                    ImageSrc = "/images/Products/BugattiVeyron.jfif",
                     ImageAlt = "Bugatti-Veyron",
                     Description = "Bugatti Veyron",
                     Price = 158545
@@ -23,7 +23,7 @@ namespace eshop.Models.DatabaseFake
                 new Product()
                 {
                     ProductName = "Lamborghini",
-                    ImageSrc = "/images/Lamborghini.jpg",
+                    ImageSrc = "/images/Products/Lamborghini.jpg",
                     ImageAlt = "Lamborghini",
                     Description = "Lamborghini",
                     Price = 125550
@@ -32,7 +32,7 @@ namespace eshop.Models.DatabaseFake
                 new Product()
                 {
                     ProductName = "Nissan GTR",
-                    ImageSrc = "/images/NissanGTR.jpg",
+                    ImageSrc = "/images/Products/NissanGTR.jpg",
                     ImageAlt = "Nissan-GTR",
                     Description = "Nissan GTR",
                     Price = 354155
