@@ -64,17 +64,19 @@ namespace eshop.Areas.Customer.Controllers
 
                     List<OrderItems> orderItems = HttpContext.Session.GetObject<List<OrderItems>>(orderItemsString);
                     OrderItems orderItemInSession = null;
-                    if (orderItems != null) 
+                    if (orderItems != null) { 
                         orderItemInSession = orderItems.Find(oi => oi.ProductID == orderItem.ProductID);
-                       
-                    else 
+                        if (product.ID == 1) itemCounter++;
+                    }
+
+                    else { 
                         orderItems = new List<OrderItems>();
-                    
+                    }
 
                     if (orderItemInSession != null)
                     {
                         ++orderItemInSession.Amount;
-                        ++itemCounter;
+                        //itemCounter++;
                         orderItemInSession.Price += (decimal)orderItem.Product.Price;   //zde pozor na datový typ -> pokud máte Price v obou případech double nebo decimal, tak je to OK. Mě se bohužel povedlo mít to jednou jako decimal a jednou jako double. Nejlepší je datový typ změnit v databázi/třídě, tak to prosím udělejte.
                     }
                     else
@@ -82,12 +84,10 @@ namespace eshop.Areas.Customer.Controllers
                         orderItems.Add(orderItem);
                     }
 
-
                     HttpContext.Session.SetObject(orderItemsString, orderItems);
 
                     totalPrice += orderItem.Product.Price;
-                    if (itemCounter > neededItems) totalPrice *= discountItems;
-                    //if (IsStudent == true) totalPrice *= User.Sleva;
+                    if (itemCounter >= neededItems) totalPrice *= discountItems;
                     if (totalPrice > neededSum) totalPrice *= discountPrice;
                     HttpContext.Session.SetDouble(totalPriceString, totalPrice);
                 }
@@ -124,7 +124,7 @@ namespace eshop.Areas.Customer.Controllers
                         OrderNumber = Convert.ToBase64String(Guid.NewGuid().ToByteArray()),
                         TotalPrice = totalPrice,
                         OrderItems = orderItems,
-                        UserId = currentUser.Id
+                        UserId = currentUser.Id,
                     };
 
 
@@ -133,6 +133,7 @@ namespace eshop.Areas.Customer.Controllers
                     await EshopDBContext.AddAsync(order);
                     await EshopDBContext.SaveChangesAsync();
 
+                    if (currentUser.IsStudent == true) totalPrice *= currentUser.Sleva;
 
 
                     HttpContext.Session.Remove(orderItemsString);

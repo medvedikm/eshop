@@ -10,7 +10,7 @@ namespace eshop.Models.Identity
     {
         public virtual string Name {get; set;}
         public virtual string LastName {get; set;}
-        //public double Sleva { get; set; }
-        //public bool IsStudent { get; set; }
+        public double Sleva { get; set; }
+        public bool IsStudent { get; set; }
     }
 }

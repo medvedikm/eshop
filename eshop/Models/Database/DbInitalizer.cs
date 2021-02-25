@@ -125,7 +125,7 @@ namespace eshop.Models.Database
                         }
                     }
                 }
-/*
+
                 User student = new User()
                 {
                     UserName = "student",
@@ -163,7 +163,7 @@ namespace eshop.Models.Database
                             Debug.WriteLine("Error during role Creation: " + error.Code + " -> " + error.Description);
                         }
                     }
-                }*/
+                }
             }
         }
     }
