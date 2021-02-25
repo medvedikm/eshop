@@ -17,7 +17,7 @@ namespace eshop.Models.DatabaseFake
                     ImageSrc = "/images/Products/BugattiVeyron.jfif",
                     ImageAlt = "Bugatti-Veyron",
                     Description = "Bugatti Veyron",
-                    Price = 4850000
+                    Price = 4750000
                 },
 
                 new Product()
@@ -26,7 +26,7 @@ namespace eshop.Models.DatabaseFake
                     ImageSrc = "/images/Products/Lamborghini.jpg",
                     ImageAlt = "Lamborghini",
                     Description = "Lamborghini",
-                    Price = 2800000
+                    Price = 2500000
                 },
 
                 new Product()
@@ -35,7 +35,7 @@ namespace eshop.Models.DatabaseFake
                     ImageSrc = "/images/Products/NissanGTR.jpg",
                     ImageAlt = "Nissan-GTR",
                     Description = "Nissan GTR",
-                    Price = 1950000
+                    Price = 1750000
                 }
 
             };

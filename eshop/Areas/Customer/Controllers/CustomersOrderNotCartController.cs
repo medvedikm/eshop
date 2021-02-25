@@ -58,15 +58,17 @@ namespace eshop.Areas.Customer.Controllers
                     Amount = 1,
                     Price = (decimal)product.Price   //zde pozor na datový typ -> pokud máte Price v obou případech double nebo decimal, tak je to OK. Mě se bohužel povedlo mít to jednou jako decimal a jednou jako double. Nejlepší je datový typ změnit v databázi/třídě, tak to prosím udělejte.
                 };
+                
 
                 if (HttpContext.Session.IsAvailable)
                 {
+                    
 
                     List<OrderItems> orderItems = HttpContext.Session.GetObject<List<OrderItems>>(orderItemsString);
                     OrderItems orderItemInSession = null;
                     if (orderItems != null) { 
                         orderItemInSession = orderItems.Find(oi => oi.ProductID == orderItem.ProductID);
-                        if (product.ID == 1) itemCounter++;
+                        
                     }
 
                     else { 
@@ -76,7 +78,8 @@ namespace eshop.Areas.Customer.Controllers
                     if (orderItemInSession != null)
                     {
                         ++orderItemInSession.Amount;
-                        //itemCounter++;
+                        
+
                         orderItemInSession.Price += (decimal)orderItem.Product.Price;   //zde pozor na datový typ -> pokud máte Price v obou případech double nebo decimal, tak je to OK. Mě se bohužel povedlo mít to jednou jako decimal a jednou jako double. Nejlepší je datový typ změnit v databázi/třídě, tak to prosím udělejte.
                     }
                     else
@@ -87,13 +90,12 @@ namespace eshop.Areas.Customer.Controllers
                     HttpContext.Session.SetObject(orderItemsString, orderItems);
 
                     totalPrice += orderItem.Product.Price;
-                    if (itemCounter >= neededItems) totalPrice *= discountItems;
-                    if (totalPrice > neededSum) totalPrice *= discountPrice;
                     HttpContext.Session.SetDouble(totalPriceString, totalPrice);
                 }
             }
+            if (itemCounter >= neededItems) totalPrice *= discountItems;
 
-
+            if (totalPrice >= neededSum) totalPrice *= discountPrice;
             return totalPrice;
         }
 
@@ -102,9 +104,11 @@ namespace eshop.Areas.Customer.Controllers
         {
             if (HttpContext.Session.IsAvailable)
             {
-
-
                 double totalPrice = 0;
+
+                double discountPrice = 0.9; //10% sleva
+                double neededSum = 30000000; //30M
+
 
                 List<OrderItems> orderItems = HttpContext.Session.GetObject<List<OrderItems>>(orderItemsString);
                 if (orderItems != null)
@@ -112,12 +116,14 @@ namespace eshop.Areas.Customer.Controllers
                     foreach (OrderItems orderItem in orderItems)
                     {
                         totalPrice += orderItem.Product.Price * orderItem.Amount;
-
                         orderItem.Product = null; //zde musime nullovat referenci na produkt, jinak by doslo o pokus jej znovu vlozit do databaze
                     }
 
-
                     User currentUser = await iSecure.GetCurrentUser(User);
+
+                    if (currentUser.IsStudent == true) totalPrice *= currentUser.Sleva;
+                    if (totalPrice >= neededSum) totalPrice *= discountPrice;
+
 
                     Order order = new Order()
                     {
@@ -133,7 +139,6 @@ namespace eshop.Areas.Customer.Controllers
                     await EshopDBContext.AddAsync(order);
                     await EshopDBContext.SaveChangesAsync();
 
-                    if (currentUser.IsStudent == true) totalPrice *= currentUser.Sleva;
 
 
                     HttpContext.Session.Remove(orderItemsString);
