@@ -34,11 +34,18 @@ namespace eshop.Areas.Customer.Controllers
         public double AddOrderItemsToSession(int? productId)
         {
             double totalPrice = 0;
+
+            double discountPrice = 0.9; //10% sleva
+            double neededSum = 30000000; //30M
+
+            double discountItems = 0.8;
+            int itemCounter = 0;
+            int neededItems = 3;
+
             if (HttpContext.Session.IsAvailable)
             {
                 totalPrice = HttpContext.Session.GetDouble(totalPriceString).GetValueOrDefault();
             }
-
 
             Product product = EshopDBContext.Products.Where(prod => prod.ID == productId).FirstOrDefault();
 
@@ -57,15 +64,17 @@ namespace eshop.Areas.Customer.Controllers
 
                     List<OrderItems> orderItems = HttpContext.Session.GetObject<List<OrderItems>>(orderItemsString);
                     OrderItems orderItemInSession = null;
-                    if (orderItems != null)
+                    if (orderItems != null) 
                         orderItemInSession = orderItems.Find(oi => oi.ProductID == orderItem.ProductID);
-                    else
+                       
+                    else 
                         orderItems = new List<OrderItems>();
-
+                    
 
                     if (orderItemInSession != null)
                     {
                         ++orderItemInSession.Amount;
+                        ++itemCounter;
                         orderItemInSession.Price += (decimal)orderItem.Product.Price;   //zde pozor na datový typ -> pokud máte Price v obou případech double nebo decimal, tak je to OK. Mě se bohužel povedlo mít to jednou jako decimal a jednou jako double. Nejlepší je datový typ změnit v databázi/třídě, tak to prosím udělejte.
                     }
                     else
@@ -77,6 +86,9 @@ namespace eshop.Areas.Customer.Controllers
                     HttpContext.Session.SetObject(orderItemsString, orderItems);
 
                     totalPrice += orderItem.Product.Price;
+                    if (itemCounter > neededItems) totalPrice *= discountItems;
+                    //if (IsStudent == true) totalPrice *= User.Sleva;
+                    if (totalPrice > neededSum) totalPrice *= discountPrice;
                     HttpContext.Session.SetDouble(totalPriceString, totalPrice);
                 }
             }
@@ -93,12 +105,14 @@ namespace eshop.Areas.Customer.Controllers
 
 
                 double totalPrice = 0;
+
                 List<OrderItems> orderItems = HttpContext.Session.GetObject<List<OrderItems>>(orderItemsString);
                 if (orderItems != null)
                 {
                     foreach (OrderItems orderItem in orderItems)
                     {
                         totalPrice += orderItem.Product.Price * orderItem.Amount;
+
                         orderItem.Product = null; //zde musime nullovat referenci na produkt, jinak by doslo o pokus jej znovu vlozit do databaze
                     }
 

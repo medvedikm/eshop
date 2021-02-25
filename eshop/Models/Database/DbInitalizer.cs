@@ -125,6 +125,45 @@ namespace eshop.Models.Database
                         }
                     }
                 }
+/*
+                User student = new User()
+                {
+                    UserName = "student",
+                    Email = "student_medvedik@utb.cz",
+                    Name = "Michal",
+                    LastName = "Medvedík",
+                    EmailConfirmed = true,
+                    Sleva = 0.95,
+                    IsStudent = true
+                };
+
+                User studentInDatabase = await userManager.FindByNameAsync(student.UserName);
+
+                if (studentInDatabase == null)
+                {
+                    IdentityResult iResult = await userManager.CreateAsync(student, password);
+
+                    if (iResult.Succeeded)
+                    {
+                        string[] roles = Enum.GetNames(typeof(Roles));
+
+                        foreach (var role in roles)
+                        {
+                            if (role != Roles.Admin.ToString())
+                            {
+                                await userManager.AddToRoleAsync(student, role);
+                            }
+
+                        }
+                    }
+                    else if (iResult.Errors != null && iResult.Errors.Count() > 0)
+                    {
+                        foreach (var error in iResult.Errors)
+                        {
+                            Debug.WriteLine("Error during role Creation: " + error.Code + " -> " + error.Description);
+                        }
+                    }
+                }*/
             }
         }
     }

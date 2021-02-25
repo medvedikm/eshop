@@ -9,6 +9,8 @@ namespace eshop.Models.Identity
     public class User : IdentityUser<int>
     {
         public virtual string Name {get; set;}
-        public virtual string LastName {get; set; }
+        public virtual string LastName {get; set;}
+        //public double Sleva { get; set; }
+        //public bool IsStudent { get; set; }
     }
 }
