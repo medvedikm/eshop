@@ -39,7 +39,7 @@ namespace eshop.Areas.Customer.Controllers
             double neededSum = 30000000; //30M
 
             double discountItems = 0.8;
-            int itemCounter = 0;
+            int counterItems = 0;
             int neededItems = 3;
 
             if (HttpContext.Session.IsAvailable)
@@ -79,13 +79,20 @@ namespace eshop.Areas.Customer.Controllers
                     {
                         ++orderItemInSession.Amount;
                         
+                        orderItemInSession.Price += (decimal)orderItem.Product.Price;
 
-                        orderItemInSession.Price += (decimal)orderItem.Product.Price;   //zde pozor na datový typ -> pokud máte Price v obou případech double nebo decimal, tak je to OK. Mě se bohužel povedlo mít to jednou jako decimal a jednou jako double. Nejlepší je datový typ změnit v databázi/třídě, tak to prosím udělejte.
+                        if(productId == 1) counterItems = orderItemInSession.Amount;
+                       
                     }
                     else
                     {
                         orderItems.Add(orderItem);
+                        //totalPrice += orderItem.Product.Price;
+
+
                     }
+
+
 
                     HttpContext.Session.SetObject(orderItemsString, orderItems);
 
@@ -93,7 +100,7 @@ namespace eshop.Areas.Customer.Controllers
                     HttpContext.Session.SetDouble(totalPriceString, totalPrice);
                 }
             }
-            if (itemCounter >= neededItems) totalPrice *= discountItems;
+            if (counterItems >= neededItems) totalPrice *= discountItems;
 
             if (totalPrice >= neededSum) totalPrice *= discountPrice;
             return totalPrice;
